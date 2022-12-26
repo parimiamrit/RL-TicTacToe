@@ -2,9 +2,7 @@ import sys
 import numpy as np
 import random
 from agents import *
-# from agents.random_agent import randomagent
-# from agents.safe_agent import safeagent
-# from agents.q_agent import qagent
+import dill as pickle
 from environment.ttt_env import TicTacToe
 
 def play_1_game(env, agent1, agent2, start, train):
@@ -49,6 +47,7 @@ if __name__ == '__main__':
         # agent2 = safe_agent.safeagent('O')
         agent2 = random_agent.randomagent('O')
     env = TicTacToe()
-    # env.print_board()
-    play(env, agent1, agent2, iterations=30000)
+    play(env, agent1, agent2, iterations=10000)
     play(env, agent1, agent2, iterations=1000, train=False)
+    with open('ql.pkl', 'wb') as f:
+        pickle.dump(agent1.q, f)
