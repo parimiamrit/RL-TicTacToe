@@ -1,9 +1,10 @@
 import sys
 import numpy as np
 import random
-from agents.random_agent import randomagent
-from agents.safe_agent import safeagent
-from agents.q_agent import qagent
+from agents import *
+# from agents.random_agent import randomagent
+# from agents.safe_agent import safeagent
+# from agents.q_agent import qagent
 from environment.ttt_env import TicTacToe
 
 def play_1_game(env, agent1, agent2, start, train):
@@ -13,10 +14,10 @@ def play_1_game(env, agent1, agent2, start, train):
             agent = agent1
         else:
             agent = agent2
-        prev_state = env.state()
-        action = agent.action(prev_state, train)
+        prev_state = env.state().copy()
+        action = agent.action(prev_state, train).copy()
         env.act(action, agent.playerid)
-        state = env.state()
+        state = env.state().copy()
         if train:
             agent.learn(env.reward, prev_state, state)
         round += 1
@@ -44,9 +45,10 @@ def play(env, agent1, agent2, iterations=10000, train=True):
 
 if __name__ == '__main__':
     if len(sys.argv) == 1:
-        agent1 = qagent('X')
-        agent2 = randomagent('O')
+        agent1 = q_agent.qagent('X')
+        # agent2 = safe_agent.safeagent('O')
+        agent2 = random_agent.randomagent('O')
     env = TicTacToe()
     # env.print_board()
-    play(env, agent1, agent2, iterations=60000)
+    play(env, agent1, agent2, iterations=30000)
     play(env, agent1, agent2, iterations=1000, train=False)

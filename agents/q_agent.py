@@ -28,11 +28,14 @@ class qagent(object):
                 return self.latest_action
             else:
                 if(len(np.argwhere(board=='')[0])==None):
+                    self.latest_action = None
                     return None
                 else:
-                    return self.policy(board)
+                    self.latest_action = self.policy(board)
+                    return self.latest_action
         else:
-            return self.greedychoice(board)
+            self.latest_action = self.greedychoice(board)
+            return self.latest_action
 
     def greedychoice(self, board):
         if(len(np.argwhere(board=='')[0])==None):
@@ -52,7 +55,7 @@ class qagent(object):
 
 
     def updateQ(self, s, a, r):
-        sp=s
+        sp,s=s.copy(),s.copy()
         sp[a]=='X'
         kx=np.argwhere(sp=='')
         if(len(kx)==0):

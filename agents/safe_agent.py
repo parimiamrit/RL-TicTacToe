@@ -5,7 +5,7 @@ class safeagent(object):
     def __init__(self, playerid):
         self.playerid=playerid
 
-    def action(self,board):
+    def action(self,board, train=True):
         for i in range(3):
             if(board[i][0]==board[i][1] and board[i][1]!=''):
                 if(board[i][2]==''):
